@@ -1,0 +1,11 @@
+* CHANGES
+* README
+* MANIFEST
+* Rakefile
+* win32-changenotify.gemspec
+* examples/test.rb
+* ext/extconf.rb
+* ext/win32/changenotify.c
+* ext/win32/changenotify.h
+* lib/win32/changenotify.rb
+* test/test_win32_changenotify.rb

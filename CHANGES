@@ -1,0 +1,66 @@
+== 0.5.1 - 21-Aug-2009
+* License changed to Artistic 2.0.
+* The ChangeNotify#wait method is now slightly more robust.
+* Renamed test file to test_win32_changenotify.rb.
+* Some gemspec updates, including license and description.
+* Renamed example file to example_win32_changenotify.rb to avoid any
+  confusion with actual test files.
+* Removed the doc/changenotify.txt file because I felt it was redundant.
+* Added an example rake task.
+
+== 0.5.0 - 9-Aug-2007
+* Now pure Ruby!
+* Now requires the win32-event library.
+* The constructor now accepts a block. If provided, it yields itself
+  and automatically closes itself when the block terminates.
+* Removed the ChangeNotify#reset method. It was never especially useful,
+  and now it's useless because of the way we wait for events (see below).
+* Added a Rakefile with tasks for installation and testing.
+* The code now uses completion ports internally, which greatly improves the
+  number of simultaneous events it can detect and report. See the 'Known
+  Issues' in the README for details on potential misses, however.
+* Some internal reorganization, with the C related code now moved into a
+  separate directory.
+* Doc, test, and example program updates.
+
+== 0.4.2 - 22-Nov-2006
+* Fixed bugs caused by changes to the Ruby internals with regards to question
+  marks and instance variables.  Thanks go to an anonymous user for the spot.
+* Minor documentation updates.
+
+== 0.4.1 - 2-Jan-2006
+* Code cleanup
+
+== 0.4.0 - 20-Apr-2005
+* ChangeNotify#wait now returns an array of ChangeNotifyStruct's, rather than
+  a single struct, because multiple notifications can occur for a single
+  event.
+* Example program and test suite updates.
+* Removed the changenotify.rd file.
+
+== 0.3.1 - 4-Feb-2005
+* Fixed a bug in ChangeNotify#wait where the timeout was not set to the
+  proper default if a timeout was not specified by the user.  Thanks go
+  to CT for the spot.
+* Made this document rdoc friendly.
+* Corrected the release date for 0.3.0.
+
+== 0.3.0 - 25-Jan-2005
+* The ChangeNotify#wait method now yields a ChangeNotifyStruct if a block is
+  provided.  This struct contains more detail on what changes occurred.
+* Added the ChangeNotify#path, ChangeNotify#recursive? and ChangeNotify#filter
+  methods.
+* The ChangeNotify.new method no longer accepts a block.  See the developer's
+  notes if you want the nitty gritty details.
+* Added more code to the extconf.rb file.  This was needed to set the
+  _WIN32_WINNT macro properly.
+* Moved the 'examples' directory to the toplevel.
+* Test suite and documentation updates.
+
+== 0.2.0 - 17-Jul-2004
+* Now uses the newer allocation framework.  This means that, as of this
+  releas, this package requires Ruby 1.8.0 or later.
+* Moved the test.rb file to doc/examples.
+
+== 0.1.0 - 7-May-2004
+* Initial release
