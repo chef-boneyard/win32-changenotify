@@ -1,97 +1,91 @@
 = Description
-	A class for monitoring events related to files and directories.  This
-	package is deprecated in favor of win32-changejournal on NTFS filesystems.
+  A class for monitoring events related to files and directories.  This
+  package is deprecated in favor of win32-changejournal on NTFS filesystems.
 
 = Prerequisites
-   * Ruby 1.8.0 or later
-   * win32-ipc 0.4.0 or later
+  * ffi
+  * win32-ipc
+  * win32-event
 
 = Installation
-   rake test (optional)
-   rake install (non-gem) OR rake install_gem (gem)
+  gem install win32-changenotify
 
 = Synopsis
-   require 'win32/changenotify'
-   include Win32
-	
-   # Indefinitely wait for a change in 'C:\some\path' and any of its
-   # subdirectories.  Print the file and action affected.
-	
-   filter = ChangeNotify::FILE_NAME | ChangeNotify::DIR_NAME
-   path   = 'C:\some\path'
+  require 'win32/changenotify'
+  include Win32
+  
+  # Indefinitely wait for a change in 'C:\some\path' and any of its
+  # subdirectories.  Print the file and action affected.
+  
+  filter = ChangeNotify::FILE_NAME | ChangeNotify::DIR_NAME
+  path   = 'C:\some\path'
    
-   cn = ChangeNotify.new(path, true, filter)
+  cn = ChangeNotify.new(path, true, filter)
 
-   cn.wait{ |arr|
-      arr.each{ |info|
-         p info.file_name
-         p info.action
-      }
-   }
+  cn.wait{ |arr|
+    arr.each{ |info|
+      p info.file_name
+      p info.action
+    }
+  }
    
-   cn.close
+  cn.close
    
-   # OR
+  # OR
    
-   ChangeNotify.new(path, true, filter) do |events|
-   	events.each{ |event|
-   		p event.file_name
-   		p event.action
-   	}
-   end
+  ChangeNotify.new(path, true, filter) do |events|
+    events.each{ |event|
+      p event.file_name
+      p event.action
+    }
+  end
 
 = Notes
-   The Win32::ChangeNotify class is a subclass of Win32::Ipc, and thus has
-   all of its methods available as well.
-	
-   This library is deprecated in favor of win32-changejournal on NTFS
-   filesystems.
+  The Win32::ChangeNotify class is a subclass of Win32::Ipc, and thus has
+  all of its methods available as well.
+  
+  This library is deprecated in favor of win32-changejournal on NTFS
+  filesystems.
    
-= Pure Ruby vs C Extension
-	The C code we used for this library prior to 0.5.0 is still available in
-	CVS for this project, but is not distributed with official releases. Note
-	that it does NOT contain the completion port approach we use in 0.5.0 and
-	later and is actually less reliable (in terms of how many simultaneous
-	events it can pickup) as a result.
-	
 = Known Issues
-   Despite the improvements yielded as a result of using completion ports,
-   it's still possible that events could be missed. To be more precise,
-   any events that occur in the fraction of a second between the call to
-   GetQueuedCompletionStatus() and ReadDirectoryChangesW() in the wait loop
-   will not get picked up. As a general rule, the faster your system is,
-   the less likely you are to encounter this scenario.
+  Despite the improvements yielded as a result of using completion ports,
+  it's still possible that events could be missed. To be more precise,
+  any events that occur in the fraction of a second between the call to
+  GetQueuedCompletionStatus() and ReadDirectoryChangesW() in the wait loop
+  will not get picked up. As a general rule, the faster your system is,
+  the less likely you are to encounter this scenario.
    
-   We do not believe it is possible to resolve this issue without native
-   thread support. We are, however, open to suggestions. :)
+  We do not believe it is possible to resolve this issue without native
+  thread support. We are, however, open to suggestions. :)
 
 = Acknowledgements
-   This class was originally based on the Win32::ChangeNotify Perl module by
-   Christopher Madsen.
-	
+  This class was originally based on the Win32::ChangeNotify Perl module by
+  Christopher Madsen.
+  
 = Future Plans
-   Probably none. This library is deprecated in favor of win32-changejournal.
-   However, that library only works on NTFS filesystems, so this library will
-   be maintained as well.
+  Probably none. This library is deprecated in favor of win32-changejournal.
+  However, that library only works on NTFS filesystems, so this library will
+  be maintained as well.
    
-   That being said, I'm always open to improvements, so feel free to submit
-   ideas and patches.
-	
+  That being said, I'm always open to improvements, so feel free to submit
+  ideas and patches.
+  
 = Known Bugs  
-   None that I know of. Please log any other bug reports on the RubyForge
-   project page at http://www.rubyforge.net/projects/win32utils
+  None that I know of. Please report any issues on the project page at:
+  
+  http://www.github.com/djberg96/win32-changenotify
    
 = License
-   Artistic 2.0
+  Artistic 2.0
     
 = Copyright
-   (C) 2003-2009 Daniel J. Berger, All Rights Reserved
+  (C) 2003-2013 Daniel J. Berger, All Rights Reserved
     
 = Warranty
-   This package is provided "as is" and without any express or
-   implied warranties, including, without limitation, the implied
-   warranties of merchantability and fitness for a particular purpose.
-	
+  This package is provided "as is" and without any express or
+  implied warranties, including, without limitation, the implied
+  warranties of merchantability and fitness for a particular purpose.
+  
 = Authors
-   Park Heesob
-   Daniel J. Berger
+  Park Heesob
+  Daniel J. Berger
