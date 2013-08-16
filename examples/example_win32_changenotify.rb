@@ -11,13 +11,14 @@ include Win32
 
 puts "VERSION: " + ChangeNotify::VERSION
 sec = 10
+dir = "C:\\Users"
 
-puts "This will timeout after #{sec} seconds of inactivity"
+puts "This will timeout after #{sec} seconds of inactivity on #{dir}."
 
 flags = ChangeNotify::FILE_NAME | ChangeNotify::DIR_NAME
 flags |= ChangeNotify::LAST_WRITE
 
-cn = ChangeNotify.new("C:\\Users", true, flags)
+cn = ChangeNotify.new(dir, true, flags)
 
 # Wait up to 'sec' seconds for something to happen
 begin
