@@ -19,9 +19,8 @@ module Windows
         :NextEntryOffset, :ulong,
         :Action, :ulong,
         :FileNameLength, :ulong,
-        :FileName, :pointer
+        :FileName, [:uint8, 1024]
       )
     end
-
   end
 end
