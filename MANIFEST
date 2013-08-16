@@ -4,8 +4,8 @@
 * Rakefile
 * win32-changenotify.gemspec
 * examples/test.rb
-* ext/extconf.rb
-* ext/win32/changenotify.c
-* ext/win32/changenotify.h
 * lib/win32/changenotify.rb
+* lib/win32/changenotify/constants.rb
+* lib/win32/changenotify/functions.rb
+* lib/win32/changenotify/structs.rb
 * test/test_win32_changenotify.rb
