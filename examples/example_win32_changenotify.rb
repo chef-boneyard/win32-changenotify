@@ -7,29 +7,29 @@
 # Modify as you see fit.
 #######################################################################
 require 'win32/changenotify'
-require 'pp'
 include Win32
 
 puts "VERSION: " + ChangeNotify::VERSION
+sec = 10
 
-puts "This will run for 20 seconds"
+puts "This will timeout after #{sec} seconds of inactivity"
 
 flags = ChangeNotify::FILE_NAME | ChangeNotify::DIR_NAME
 flags |= ChangeNotify::LAST_WRITE
 
-cn = ChangeNotify.new("c:\\", true, flags)
+cn = ChangeNotify.new("C:\\Users", true, flags)
 
-# Wait up to 20 seconds for something to happen
+# Wait up to 'sec' seconds for something to happen
 begin
-   cn.wait(20){ |events|
-      events.each { |event|
-	     puts "Something changed"
-	     puts "File: " + event.file_name
-	     puts "Action: " + event.action
-      }
-   }
+  cn.wait(sec) do |events|
+    events.each { |event|
+	    puts "Something changed"
+	    puts "File: " + event.file_name
+	    puts "Action: " + event.action
+    }
+  end
 rescue
-   cn.close
+  cn.close
 end
 
 puts "ChangeNotify example program done"
