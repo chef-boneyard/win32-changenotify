@@ -2,11 +2,11 @@ require 'rubygems'
 
 Gem::Specification.new do |spec|
   spec.name        = 'win32-changenotify'
-  spec.version     = '0.5.2'
+  spec.version     = '0.6.0'
   spec.author      = 'Daniel J. Berger'
   spec.license     = 'Artistic 2.0'
   spec.email       = 'djberg96@gmail.com'
-  spec.homepage    = 'http://www.rubyforge.org/projects/win32utils'
+  spec.homepage    = 'http://github.com/djberg96/win32-changenotify'
   spec.summary     = 'A way to monitor files and directories on MS Windows'
   spec.test_file   = 'test/test_win32_changenotify.rb'
   spec.files       = Dir['**/*'].reject{ |f| f.include?('git') }
@@ -14,7 +14,8 @@ Gem::Specification.new do |spec|
   spec.rubyforge_project = 'win32utils'
   spec.extra_rdoc_files  = ['MANIFEST', 'README', 'CHANGES']
 
-  spec.add_dependency('windows-pr', '>= 1.0.6')
+  spec.add_dependency('ffi')
+  spec.add_development_dependency('rake')
 
   spec.description = <<-EOF
     The win32-changenotify library provides an interface for monitoring
