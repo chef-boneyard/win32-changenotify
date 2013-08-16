@@ -1,3 +1,6 @@
+== 0.6.0 - ???
+* Converted code to FFI.
+
 == 0.5.1 - 21-Aug-2009
 * License changed to Artistic 2.0.
 * The ChangeNotify#wait method is now slightly more robust.
