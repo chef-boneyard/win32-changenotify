@@ -15,6 +15,7 @@ Gem::Specification.new do |spec|
   spec.extra_rdoc_files  = ['MANIFEST', 'README', 'CHANGES']
 
   spec.add_dependency('ffi')
+  spec.add_dependency('win32-event')
   spec.add_development_dependency('rake')
 
   spec.description = <<-EOF
