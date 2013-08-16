@@ -1,5 +1,6 @@
 == 0.6.0 - ???
 * Converted code to FFI.
+* Updated dependencies in the gemspec, including ffi and win32-event.
 
 == 0.5.1 - 21-Aug-2009
 * License changed to Artistic 2.0.
