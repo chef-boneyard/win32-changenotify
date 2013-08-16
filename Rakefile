@@ -10,7 +10,12 @@ namespace :gem do
   desc 'Create the win32-changenotify gem'
   task :create => [:clean] do
     spec = eval(IO.read('win32-changenotify.gemspec'))
-    Gem::Builder.new(spec).build
+    if Gem::VERSION.to_f >= 2.0
+      require 'rubygems/package'
+      Gem::Package.build(spec)
+    else
+      Gem::Builder.new(spec).build
+    end
   end
 
   desc 'Install the win32-changenotify gem'
