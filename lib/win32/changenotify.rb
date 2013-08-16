@@ -117,11 +117,10 @@ module Win32
     def wait(seconds = INFINITE)
       seconds *= 1000 unless seconds == INFINITE
 
-      fni    = FILE_NOTIFY_INFORMATION.new
-      rbytes = FFI::MemoryPointer.new(:ulong)
-      qbytes = FFI::MemoryPointer.new(:ulong)
+      fni_ptr = FFI::MemoryPointer.new(FILE_NOTIFY_INFORMATION, 4096)
+      rbytes  = FFI::MemoryPointer.new(:ulong)
+      qbytes  = FFI::MemoryPointer.new(:ulong)
 
-      subtree    = @recursive ? 1 : 0
       dir_handle = get_dir_handle(@path)
 
       comp_key = FFI::MemoryPointer.new(:ulong)
@@ -136,9 +135,9 @@ module Win32
 
         bool = ReadDirectoryChangesW(
            dir_handle,
-           fni,
-           fni.size,
-           subtree,
+           fni_ptr,
+           fni_ptr.size,
+           @recursive,
            @filter,
            rbytes,
            @overlap,
@@ -167,13 +166,13 @@ module Win32
 
           break if comp_key.read_ulong == 0
 
-          yield get_file_action(fni) if block_given?
+          yield get_file_action(fni_ptr) if block_given?
 
           bool = ReadDirectoryChangesW(
             dir_handle,
-            fni,
-            fni.size,
-            subtree,
+            fni_ptr,
+            fni_ptr.size,
+            @recursive,
             @filter,
             rbytes,
             @overlap,
@@ -194,12 +193,15 @@ module Win32
     # Returns an array of ChangeNotify structs, each containing a file name
     # and an action.
     #
-    def get_file_action(fni2)
-      fni = fni2.dup
+    # TODO: This is segfaulting
+    #
+    def get_file_action(fni_ptr2)
+      fni_ptr = fni_ptr2.dup
       array  = []
 
       while true
         str_action = 'unknown'
+        fni = FILE_NOTIFY_INFORMATION.new(fni_ptr)
 
         case fni[:Action]
           when FILE_ACTION_ADDED
@@ -221,7 +223,8 @@ module Win32
         array.push(struct)
 
         break if fni[:NextEntryOffset] == 0
-        fni += fni[:NextEntryOffset]
+        fni_ptr += fni[:NextEntryOffset]
+        break if fni.null?
       end
 
       array
@@ -245,6 +248,21 @@ module Win32
       end
 
       handle
+    end
+  end
+end
+
+if $0 == __FILE__
+  include Win32
+  flags = ChangeNotify::FILE_NAME | ChangeNotify::DIR_NAME | ChangeNotify::LAST_WRITE
+  path = "C:\\"
+
+  ChangeNotify.new(path, true, flags) do |cn|
+    cn.wait do |events|
+      events.each{ |event|
+        p event.file_name
+        p event.action
+      }
     end
   end
 end
