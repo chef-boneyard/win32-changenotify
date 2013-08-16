@@ -55,8 +55,8 @@
   will not get picked up. As a general rule, the faster your system is,
   the less likely you are to encounter this scenario.
    
-  We do not believe it is possible to resolve this issue without native
-  thread support. We are, however, open to suggestions. :)
+  With Ruby 2.x and JRuby this should be even less of an issue than it's
+  been in the past.
 
 = Acknowledgements
   This class was originally based on the Win32::ChangeNotify Perl module by
