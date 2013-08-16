@@ -144,9 +144,7 @@ module Win32
            nil
         )
 
-        unless bool
-          raise SystemCallError.new('ReadDirectoryChangesW', FFI.errno)
-        end
+        raise_windows_error('ReadDirectoryChangesW') unless bool
 
         while true
           bool = GetQueuedCompletionStatus(
@@ -157,9 +155,7 @@ module Win32
             seconds
           )
 
-          unless bool
-            raise SystemCallError.new('GetQueuedCompletionStatus', FFI.errno)
-          end
+          raise_windows_error('GetQueuedCompletionStatus') unless bool
 
           @signaled = true
           @event.signaled = true
@@ -179,9 +175,7 @@ module Win32
             nil
           )
 
-          unless bool
-            raise SystemCallError.new('ReadDirectoryChangesW', FFI.errno)
-          end
+          raise_windows_error('ReadDirectoryChangesW') unless bool
         end
       ensure
         CloseHandle(dir_handle)
@@ -243,7 +237,7 @@ module Win32
       )
 
       if handle == INVALID_HANDLE_VALUE
-        raise SystemCallError.new('CreateFile', FFI.errno)
+        raise_windows_error('CreateFileA')
       end
 
       handle
