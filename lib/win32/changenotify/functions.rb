@@ -19,7 +19,8 @@ module Windows
 
     attach_function :GetQueuedCompletionStatus,
       [:handle, :ptr, :ptr, :ptr, :dword],
-      :bool
+      :bool,
+      :nonblock => true
 
     attach_function :CreateFileA,
       [:string, :dword, :dword, :ptr, :dword, :dword, :handle],
