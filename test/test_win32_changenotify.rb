@@ -81,6 +81,11 @@ class TC_Win32_ChangeNotify < Test::Unit::TestCase
     assert_raises(TypeError){ ChangeNotify.new(1, true, @filter, 'bogus') }
   end
 
+  test "ffi functions are private" do
+    assert_not_respond_to(@cn, :ReadDirectoryChangesW)
+    assert_not_respond_to(ChangeNotify, :ReadDirectoryChangesW)
+  end
+
   def teardown
     @cn = nil
     @filter = nil
