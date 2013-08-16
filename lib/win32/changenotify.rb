@@ -193,10 +193,8 @@ module Win32
     # Returns an array of ChangeNotify structs, each containing a file name
     # and an action.
     #
-    # TODO: This is segfaulting
-    #
     def get_file_action(fni_ptr2)
-      fni_ptr = fni_ptr2.dup
+      fni_ptr = fni_ptr2.dup # Will segfault otherwise
       array  = []
 
       while true
@@ -217,7 +215,8 @@ module Win32
         end
 
         len  = fni[:FileNameLength]
-        file = fni[:FileName].read_string(len)
+        file = (fni[:FileName].to_ptr.read_string(len) + "\0\0").force_encoding('UTF-16LE')
+        file.encode!(Encoding.default_external)
 
         struct = ChangeNotifyStruct.new(str_action, file)
         array.push(struct)
@@ -248,21 +247,6 @@ module Win32
       end
 
       handle
-    end
-  end
-end
-
-if $0 == __FILE__
-  include Win32
-  flags = ChangeNotify::FILE_NAME | ChangeNotify::DIR_NAME | ChangeNotify::LAST_WRITE
-  path = "C:\\"
-
-  ChangeNotify.new(path, true, flags) do |cn|
-    cn.wait do |events|
-      events.each{ |event|
-        p event.file_name
-        p event.action
-      }
     end
   end
 end
