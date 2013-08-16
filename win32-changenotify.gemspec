@@ -16,6 +16,8 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency('ffi')
   spec.add_dependency('win32-event')
+
+  spec.add_development_dependency('test-unit')
   spec.add_development_dependency('rake')
 
   spec.description = <<-EOF
