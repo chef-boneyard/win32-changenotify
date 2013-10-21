@@ -2,7 +2,7 @@ require 'rubygems'
 
 Gem::Specification.new do |spec|
   spec.name        = 'win32-changenotify'
-  spec.version     = '0.6.0'
+  spec.version     = '0.6.1'
   spec.author      = 'Daniel J. Berger'
   spec.license     = 'Artistic 2.0'
   spec.email       = 'djberg96@gmail.com'

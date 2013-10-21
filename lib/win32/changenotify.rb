@@ -16,7 +16,7 @@ module Win32
     extend Windows::Functions
 
     # The version of the win32-changenotify library
-    VERSION = '0.6.0'
+    VERSION = '0.6.1'
 
     # Filter: Attribute changes
     ATTRIBUTES = FILE_NOTIFY_CHANGE_ATTRIBUTES

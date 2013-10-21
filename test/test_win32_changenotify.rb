@@ -15,7 +15,7 @@ class TC_Win32_ChangeNotify < Test::Unit::TestCase
   end
 
   test "version constant is set to expected value" do
-    assert_equal('0.6.0', ChangeNotify::VERSION)
+    assert_equal('0.6.1', ChangeNotify::VERSION)
   end
 
   test "path basic functionality" do
