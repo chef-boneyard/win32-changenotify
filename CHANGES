@@ -1,3 +1,6 @@
+== 0.6.1 - 21-Oct-2013
+* Fixed INVALID_HANDLE_VALUE for 64-bit Ruby.
+
 == 0.6.0 - 16-Aug-2013
 * Converted code to FFI.
 * Updated dependencies in the gemspec, including ffi and win32-event.
