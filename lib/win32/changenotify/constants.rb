@@ -1,5 +1,9 @@
+require 'ffi'
+
 module Windows
   module Constants
+    include FFI::Library
+
     FILE_ACTION_ADDED            = 0x00000001
     FILE_ACTION_REMOVED          = 0x00000002
     FILE_ACTION_MODIFIED         = 0x00000003
@@ -23,6 +27,6 @@ module Windows
     FILE_FLAG_BACKUP_SEMANTICS = 0x02000000
     FILE_FLAG_OVERLAPPED       = 0x40000000
 
-    INVALID_HANDLE_VALUE = 0xFFFFFFFF
+    INVALID_HANDLE_VALUE = FFI::Pointer.new(-1).address
   end
 end
